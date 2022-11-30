@@ -3,22 +3,24 @@ import pygame
 from Background import Background
 from Button import Button, print_text
 from LevelsMenu import LevelsMenu
+from SettingMenu import SettingsMenu
 
 
 class MainMenu:
     def __init__(self, screen: pygame.Surface):
         self.size = screen.get_size()
+        self.background = Background('src/math_mech_menu.jpg', [0, 0])
         self.start_button = Button(130, 70, screen, pygame.Color(154, 205, 50))
         self.settings_button = Button(200, 70, screen, pygame.Color(70, 130, 180))
         self.quit_button = Button(100, 70, screen, pygame.Color(250, 128, 114))
         self.widgets = {'start': [False, LevelsMenu(screen, self)],
-                        'settings': [False, lambda: print('Setting was pressed')],
+                        'settings': [False, SettingsMenu(screen, self)],
                         'quit': [False, quit]}
 
-    def show(self, screen: pygame.Surface, background: Background):
+    def show(self, screen: pygame.Surface):
         while True:
             screen.fill([255, 255, 255])
-            screen.blit(background.image, background.rect)
+            screen.blit(self.background.image, self.background.rect)
             print_text('Zuma',
                        self.size[0] / 2 - 60 * 5 / 2,
                        self.size[1] / 50, 150,

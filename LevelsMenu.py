@@ -9,14 +9,15 @@ class LevelsMenu:
         self.size = screen.get_size()
         self.back_button = Button(115, 70, screen, pygame.Color(255, 165, 0))
         self.levels = {'back': [False, back_menu]}
+        self.background = Background('src/math_mech_levels.jpg', [0, 0])
 
         for i in range(5):
             self.levels[f'level {i+1}'] = [False, lambda: print(f'{i+1} level was selected')]
 
-    def show(self, screen: pygame.Surface, background: Background):
+    def show(self, screen: pygame.Surface):
         while True:
             screen.fill([255, 255, 255])
-            screen.blit(background.image, background.rect)
+            screen.blit(self.background.image, self.background.rect)
             for i in range(5):
                 self.levels[f'level {i + 1}'][0] = \
                     Button(160, 70, screen).draw_button(
