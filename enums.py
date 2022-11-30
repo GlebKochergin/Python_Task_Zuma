@@ -8,3 +8,10 @@ class Color(Enum):
     GREEN = pygame.Color(154, 205, 50)
     BLUE = pygame.Color(70, 130, 180)
     ORANGE = pygame.Color(255, 165, 0)
+
+
+class Rotation(Enum):
+    UP = 1
+    RIGHT = 2
+    DOWN = 3
+    LEFT = 4

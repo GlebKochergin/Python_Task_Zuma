@@ -3,6 +3,8 @@ import pygame
 from Background import Background
 from Button import Button
 from frog import Frog
+from ball import Ball
+from enums import Rotation
 
 
 class Level:
@@ -20,13 +22,16 @@ class Level1(Level):
         super().__init__(screen, back_menu)
         self.background = Background('src/backgrounds/level_1_background.jpg', [0, 0])
         self.frog = Frog(screen, 'src/textures/ArseniyFrog1.png')
-        self.ball = pygame.image.load('src/textures/GlebBall.png')
-        self.ball = pygame.transform.scale(self.ball, (60, 60))
+        self.ball = Ball(screen, 'src/textures/GlebBall.png')
         self.hole = pygame.image.load('src/textures/hole.png')
         self.hole = pygame.transform.scale(self.hole, (90, 90))
+        self.clock = pygame.time.Clock()
+        self.critical_points = [(1100, 100, Rotation.DOWN.value), (1100, 690, Rotation.LEFT.value),
+                                (122, 690, Rotation.UP.value)]
 
     def show(self, screen: pygame.Surface):
         while True:
+            self.clock.tick(600)
             screen.fill([255, 255, 255])
             screen.blit(self.background.image, self.background.rect)
             positions = [
@@ -40,7 +45,9 @@ class Level1(Level):
                 pygame.draw.rect(shape_surf, (255, 255, 255, 127),
                                  shape_surf.get_rect())
                 screen.blit(shape_surf, pos[1])
-            screen.blit(self.ball, (200, 100))
+            self.__check_critical_points()
+            self.ball.move()
+            self.ball.blit()
             screen.blit(self.hole, (122, 350))
             self.frog.rotate()
             self.frog.blit()
@@ -49,3 +56,23 @@ class Level1(Level):
                     pygame.quit()
                     sys.exit(0)
             pygame.display.update()
+
+    def __check_critical_points(self):
+        if self.ball.rotation == Rotation.LEFT.value or \
+                self.ball.rotation == Rotation.RIGHT.value:
+            for point in self.critical_points:
+                if self.ball.rect.x == point[0]:
+                    self.ball.rotation = point[2]
+                    break
+        else:
+            for point in self.critical_points:
+                if self.ball.rect.y == point[1]:
+                    self.ball.rotation = point[2]
+                    break
+        # print(self.ball.rect)
+        # print(self.hole.get_rect())
+        if self.ball.rect.y <= 350 and self.ball.rect.x >= 122:
+            print('WIN')
+            self.ball.remove()
+        # if self.ball.rect.x == self.critical_points[0][0]:
+        #     self.ball.rotation = self.critical_points[0][2]
