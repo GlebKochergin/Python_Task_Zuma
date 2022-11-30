@@ -51,7 +51,7 @@ class Button:
 
 def print_text(message, x, y, size_font, screen,
                font_color=(0, 0, 0),
-               font_type='src/MachineGunk-nyqg.ttf'):
+               font_type='src/fonts/MachineGunk-nyqg.ttf'):
     font_size = size_font
     font_type = pygame.font.Font(font_type, font_size)
     text = font_type.render(message, True, font_color)

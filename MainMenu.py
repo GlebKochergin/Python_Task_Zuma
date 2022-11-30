@@ -9,7 +9,7 @@ from SettingMenu import SettingsMenu
 class MainMenu:
     def __init__(self, screen: pygame.Surface):
         self.size = screen.get_size()
-        self.background = Background('src/math_mech_menu.jpg', [0, 0])
+        self.background = Background('src/backgrounds/math_mech_menu.jpg', [0, 0])
         self.start_button = Button(130, 70, screen, pygame.Color(154, 205, 50))
         self.settings_button = Button(200, 70, screen, pygame.Color(70, 130, 180))
         self.quit_button = Button(100, 70, screen, pygame.Color(250, 128, 114))
