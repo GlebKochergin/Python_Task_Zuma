@@ -20,7 +20,8 @@ class SettingsMenu:
         self.volume = 500
         pygame.mixer.music.load('src/music/start_music_cadillac.mp3')
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(self.volume / 1000)
+        # pygame.mixer.music.set_volume(self.volume / 1000)
+        pygame.mixer.music.set_volume(0)
 
     def add_vlm(self):
         if self.volume < 500:

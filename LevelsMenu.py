@@ -3,7 +3,7 @@ import pygame
 from Background import Background
 from Button import Button
 from enums import Color
-from levels.level import Level
+from levels.level import Level1
 
 
 class LevelsMenu:
@@ -15,7 +15,7 @@ class LevelsMenu:
         self.background = Background('src/backgrounds/math_mech_levels.jpg', [0, 0])
 
         for i in range(5):
-            self.levels[f'level {i+1}'] = [False, Level(screen, self)]
+            self.levels[f'level {i+1}'] = [False, Level1(screen, self)]
 
     def show(self, screen: pygame.Surface):
         while True:
