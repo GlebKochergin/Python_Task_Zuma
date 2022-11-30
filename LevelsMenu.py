@@ -2,12 +2,13 @@ import sys
 import pygame
 from Background import Background
 from Button import Button
+from enums import Color
 
 
 class LevelsMenu:
     def __init__(self, screen: pygame.Surface, back_menu):
         self.size = screen.get_size()
-        self.back_button = Button(115, 70, screen, pygame.Color(255, 165, 0))
+        self.back_button = Button(115, 70, screen, Color.ORANGE.value)
         self.levels = {'back': [False, back_menu]}
         self.background = Background('src/backgrounds/math_mech_levels.jpg', [0, 0])
 

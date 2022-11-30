@@ -4,15 +4,15 @@ from Background import Background
 from Button import Button, print_text
 from LevelsMenu import LevelsMenu
 from SettingMenu import SettingsMenu
-
+from enums import Color
 
 class MainMenu:
     def __init__(self, screen: pygame.Surface):
         self.size = screen.get_size()
         self.background = Background('src/backgrounds/math_mech_menu.jpg', [0, 0])
-        self.start_button = Button(130, 70, screen, pygame.Color(154, 205, 50))
-        self.settings_button = Button(200, 70, screen, pygame.Color(70, 130, 180))
-        self.quit_button = Button(100, 70, screen, pygame.Color(250, 128, 114))
+        self.start_button = Button(130, 70, screen, Color.GREEN.value)
+        self.settings_button = Button(200, 70, screen, Color.BLUE.value)
+        self.quit_button = Button(100, 70, screen, Color.RED.value)
         self.widgets = {'start': [False, LevelsMenu(screen, self)],
                         'settings': [False, SettingsMenu(screen, self)],
                         'quit': [False, quit]}

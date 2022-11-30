@@ -2,12 +2,13 @@ import sys
 import pygame
 from Background import Background
 from Button import Button, print_text
+from enums import Color
 
 
 class SettingsMenu:
     def __init__(self, screen: pygame.Surface, back_menu):
         self.size = screen.get_size()
-        self.back_button = Button(115, 70, screen, pygame.Color(255, 165, 0))
+        self.back_button = Button(115, 70, screen, Color.ORANGE.value)
         self.background = Background('src/backgrounds/math_mech_settings.jpg', [0, 0])
         self.add_vlm_button = Button(50, 50, screen)
         self.lower_vlm_button = Button(50, 50, screen)
