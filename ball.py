@@ -4,7 +4,7 @@ from enums import Rotation
 
 
 class Ball(pygame.sprite.Sprite):
-    def __init__(self, screen, texture_path):
+    def __init__(self, screen, texture_path, dx=200, dy=100, trajectory=None):
         pygame.sprite.Sprite.__init__(self)
         self.screen = screen
         self.image = pygame.image.load(texture_path)
@@ -12,8 +12,8 @@ class Ball(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (w // 5, h // 5))
         self.image = pygame.transform.rotate(self.image, -90)
         self.rect = self.image.get_rect(center=(200, 100))
-        self.rect.x = 200
-        self.rect.y = 100
+        self.rect.x = dx
+        self.rect.y = dy
         self.rect.width = w // 5
         self.rect.height = h // 5
         self.original_image = self.image
@@ -21,12 +21,17 @@ class Ball(pygame.sprite.Sprite):
         self.angle = 0
         self.screen.blit(self.image, self.rect)
         self.rotation = Rotation.RIGHT.value
+        if trajectory is not None:
+            self.trajectory = trajectory.copy()
+        else:
+            self.trajectory = []
+
 
     def blit(self):
         self.screen.blit(self.image, self.rect)
 
     def move(self):
-        self.__rotate()
+        # self.__rotate()
         if self.rotation == Rotation.RIGHT.value:
             self.rect.x += self.speed
         elif self.rotation == Rotation.LEFT.value:
@@ -41,4 +46,8 @@ class Ball(pygame.sprite.Sprite):
         self.angle += 0.5
         self.image = pygame.transform.rotate(self.original_image,
                                              -self.angle % 360 - 90)
-        self.rect = self.image.get_rect(center=self.rect.center)
+        # self.rect = pygame.rect()
+        # self.rect = self.image.get_rect(center=self.rect.center)
+
+    def update(self):
+        self.rect.x += 5

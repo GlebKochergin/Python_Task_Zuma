@@ -1,3 +1,4 @@
+import random
 import sys
 import pygame
 from Background import Background
@@ -26,8 +27,17 @@ class Level1(Level):
         self.hole = pygame.image.load('src/textures/hole.png')
         self.hole = pygame.transform.scale(self.hole, (90, 90))
         self.clock = pygame.time.Clock()
-        self.critical_points = [(1100, 100, Rotation.DOWN.value), (1100, 690, Rotation.LEFT.value),
-                                (122, 690, Rotation.UP.value)]
+        self.critical_points = [(1100,Rotation.DOWN.value), (700, Rotation.LEFT.value),
+                                (135, Rotation.UP.value)]
+        self.balls_textures = ['src/textures/GlebBall.png',
+                       'src/textures/IlyaBall.png',
+                       'src/textures/KolyaBall.png',
+                       'src/textures/KostyaBall.png',
+                       'src/textures/StepaBall.png',
+                       'src/textures/VovaBall.png']
+        self.balls = [Ball(screen, random.choice(self.balls_textures), i, trajectory=self.critical_points)
+                    for i in range(-600, 1, 60)]
+        self.kill_balls = pygame.sprite.Group()
 
     def show(self, screen: pygame.Surface):
         while True:
@@ -45,34 +55,49 @@ class Level1(Level):
                 pygame.draw.rect(shape_surf, (255, 255, 255, 127),
                                  shape_surf.get_rect())
                 screen.blit(shape_surf, pos[1])
-            self.__check_critical_points()
-            self.ball.move()
-            self.ball.blit()
             screen.blit(self.hole, (122, 350))
+            for ball in self.balls:
+                ball.blit()
+                self.__check_critical_points(ball)
+                ball.move()
+                if ball.rect.y <= 365 and not ball.trajectory:
+                    ball.remove()
+                    self.balls.remove(ball)
             self.frog.rotate()
             self.frog.blit()
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit(0)
+                if i.type == pygame.MOUSEBUTTONUP:
+                    kill_ball = Ball(screen,
+                                     random.choice(self.balls_textures),
+                                     500, 300)
+                    self.kill_balls.add(kill_ball)
+            self.kill_balls.update()
+            self.kill_balls.draw(screen)
             pygame.display.update()
 
-    def __check_critical_points(self):
-        if self.ball.rotation == Rotation.LEFT.value or \
-                self.ball.rotation == Rotation.RIGHT.value:
-            for point in self.critical_points:
-                if self.ball.rect.x == point[0]:
-                    self.ball.rotation = point[2]
-                    break
+    def __check_critical_points(self, ball):
+        if not ball.trajectory:
+            return
+        if ball.rotation == Rotation.LEFT.value or \
+                ball.rotation == Rotation.RIGHT.value:
+            if ball.rect.x == ball.trajectory[0][0]:
+                # print("Rotatin - LEFT/RIGHT")
+                # print(f'x: {ball.rect.x}, y: {ball.rect.y}')
+                ball.rotation = ball.trajectory[0][1]
+                ball.trajectory.pop(0)            
         else:
-            for point in self.critical_points:
-                if self.ball.rect.y == point[1]:
-                    self.ball.rotation = point[2]
-                    break
-        # print(self.ball.rect)
+            if ball.rect.y == ball.trajectory[0][0]:
+                # print("Rotation - UP/DOWN")
+                # print(f'x: {ball.rect.x}, y: {ball.rect.y}')
+                ball.rotation = ball.trajectory[0][1]
+                ball.trajectory.pop(0)
+                # print(self.ball.rect)
         # print(self.hole.get_rect())
-        if self.ball.rect.y <= 350 and self.ball.rect.x >= 122:
-            print('WIN')
-            self.ball.remove()
-        # if self.ball.rect.x == self.critical_points[0][0]:
-        #     self.ball.rotation = self.critical_points[0][2]
+        # if ball.rect.y <= 350 and ball.rect.x >= 122:
+        #     print('WIN')
+        #     ball.remove()
+        # if ball.rect.x == self.critical_points[0][0]:
+        #     ball.rotation = self.critical_points[0][2]
