@@ -38,7 +38,7 @@ class Frog(pygame.sprite.Sprite):
         x, y, w, h = self.rect
         direction = pygame.mouse.get_pos() - Vector2(x + w // 2, y + h // 2)
         radius, angle = direction.as_polar()
-        print(angle)
+        # print(angle)
         self.image = pygame.transform.rotate(self.original_image,  -angle - 90)
         self.line = self.original_line.rotate(2*angle)
         # radius, angle = self.line.as_polar()

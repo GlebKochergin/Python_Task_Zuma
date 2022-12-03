@@ -72,7 +72,8 @@ class Level1(Level):
                 if i.type == pygame.MOUSEBUTTONUP:
                     kill_ball = Ball(screen,
                                      random.choice(self.balls_textures),
-                                     500, 300)
+                                     520, 340)
+                    # kill_ball.find_path()
                     self.kill_balls.add(kill_ball)
             self.kill_balls.update()
             self.kill_balls.draw(screen)

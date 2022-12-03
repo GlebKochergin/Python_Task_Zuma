@@ -1,3 +1,5 @@
+import math
+
 import pygame
 from pygame.math import Vector2
 from enums import Rotation
@@ -25,6 +27,9 @@ class Ball(pygame.sprite.Sprite):
             self.trajectory = trajectory.copy()
         else:
             self.trajectory = []
+        self.speed_x = 5
+        self.speed_y = 5
+        self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
 
 
     def blit(self):
@@ -50,4 +55,37 @@ class Ball(pygame.sprite.Sprite):
         # self.rect = self.image.get_rect(center=self.rect.center)
 
     def update(self):
-        self.rect.x += 5
+        dx = self.mouse_x - 520
+        dy = self.mouse_y - 340
+        angle = math.atan2(dy, dx)
+        self.rect.x += 10 * math.cos(angle)
+        self.rect.y += 10 * math.sin(angle)
+
+    def find_path(self):
+        dx = self.mouse_x - self.rect.x
+        dy = self.mouse_y - self.rect.y
+        angle = math.atan2(dy, dx)
+        self.speed_x += 5 * math.cos(angle)
+        self.speed_y += 5 * math.sin(angle)
+        # k = abs(self.mouse_y - self.rect.y) // abs(self.mouse_x - self.rect.x)
+        # if self.rect.x < self.mouse_x:
+        #     delta_x = self.mouse_x - self.rect.x
+        #     delta_x = max(delta_x, 300)
+        #     self.speed_x = delta_x // 95
+        # else:
+        #     delta_x = self.rect.x - self.mouse_x
+        #     delta_x = max(delta_x, 300)
+        #     self.speed_x = -delta_x // 95
+        # print(self.speed_x)
+        # if self.rect.y < self.mouse_y:
+        #     delta_y = self.mouse_y - self.rect.y
+        #     delta_y = max(delta_y, 300*k)
+        #     self.speed_y = delta_y // 95
+        # else:
+        #     delta_y = self.rect.y - self.mouse_y
+        #     delta_y = max(delta_y, 300*k)
+        #     self.speed_y = -delta_y // 95
+        # print(self.speed_y)
+
+
+
