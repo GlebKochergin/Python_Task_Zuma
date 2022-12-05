@@ -26,10 +26,20 @@ class Frog(pygame.sprite.Sprite):
         self.line_x = 538
         self.line_y = 378
         self.ball = Ball(self.screen, "src/textures/KostyaBall.png", 520, 340)
+        self.orig_rect = pygame.Surface((200, 100))
+        self.around_rect = self.orig_rect.get_rect()
+        #
+        # self.shape_surf = pygame.transform.rotate(self.shape_surf, -110)
+        # pygame.draw.rect(self.shape_surf, (255, 255, 255, 127),
+        #                  self.shape_surf.get_rect())
+
+    # screen.blit(self.hole, (122, 350))
 
     def blit(self):
         self.screen.blit(self.image, self.rect)
         self.screen.blit(self.ball.image, self.ball.rect)
+        # self.screen.blit(self.shape_surf, (self.rect.x, self.rect.y))
+        # self.screen.blit(self.around_rect, (self.around_rect.x, self.around_rect.y))
         # pygame.draw.circle(self.screen, (255, 0, 0), (600, 400), 62, 1)
         # pygame.draw.line(self.screen, (255, 0, 0), (600, 400), (self.line.x, self.line.y), 1)
 

@@ -35,8 +35,10 @@ class Level1(Level):
                        'src/textures/KostyaBall.png',
                        'src/textures/StepaBall.png',
                        'src/textures/VovaBall.png']
+        # self.balls = [Ball(screen, random.choice(self.balls_textures), i, trajectory=self.critical_points)
+        #             for i in range(-6000, 1, 60)]
         self.balls = [Ball(screen, random.choice(self.balls_textures), i, trajectory=self.critical_points)
-                    for i in range(-600, 1, 60)]
+                        for i in range(10, 371, 60)]
         self.kill_balls = pygame.sprite.Group()
 
     def show(self, screen: pygame.Surface):
@@ -60,21 +62,74 @@ class Level1(Level):
                 ball.blit()
                 self.__check_critical_points(ball)
                 ball.move()
-                if ball.rect.y <= 365 and not ball.trajectory:
-                    ball.remove()
-                    self.balls.remove(ball)
-            self.frog.rotate()
+                # if ball.rect.y <= 365 and not ball.trajectory:
+                #     ball.remove()
+                #     self.balls.remove(ball)
+            # self.frog.rotate()
             self.frog.blit()
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit(0)
                 if i.type == pygame.MOUSEBUTTONUP:
-                    kill_ball = Ball(screen,
-                                     random.choice(self.balls_textures),
-                                     520, 340)
-                    # kill_ball.find_path()
-                    self.kill_balls.add(kill_ball)
+                    if len(self.kill_balls) == 0:
+                        kill_ball = Ball(screen,
+                                         random.choice(self.balls_textures),
+                                         520, 340)
+                        self.kill_balls.add(kill_ball)
+                    if len(self.kill_balls) > 0:
+                        last_sprite = self.kill_balls.sprites()[-1]
+                        if (last_sprite.rect.x < -60
+                                or last_sprite.rect.x > 1260
+                                or last_sprite.rect.y < -60
+                                or last_sprite.rect.y > 860):
+                            kill_ball = Ball(screen,
+                                             random.choice(self.balls_textures),
+                                             520, 340)
+                            self.kill_balls.add(kill_ball)
+
+                        # self.kill_balls.sprites()[-1].move(1)
+            if len(self.kill_balls) > 0:
+                curr_ball = self.kill_balls.sprites()[-1]
+                if curr_ball.rect.x <= 1100 and curr_ball.rect.y <= 155:
+                    if abs(curr_ball.rect.x - self.balls[0].rect.x)<= 60:
+                        x, y = self.balls[0].rect.x, self.balls[0].rect.y
+                        trajectory = self.balls[0].trajectory
+                        curr_ball.trajectory = trajectory.copy()
+                        curr_ball.rect.x = x - 60
+                        curr_ball.rect.y = y
+                        # self.balls[0].move_by_insert_ball(30)
+                        self.balls.insert(0, curr_ball)
+                        self.kill_balls.remove(curr_ball)
+                        continue
+                    if abs(curr_ball.rect.x - self.balls[-1].rect.x)<= 60:
+                        x, y = self.balls[-1].rect.x, self.balls[-1].rect.y
+                        trajectory = self.balls[-1].trajectory
+                        curr_ball.trajectory = trajectory.copy()
+                        curr_ball.rect.x = x + 60
+                        curr_ball.rect.y = y
+                        # self.balls[0].move_by_insert_ball(30)
+                        self.balls.append(curr_ball)
+                        self.kill_balls.remove(curr_ball)
+                        continue
+                    for i in range(0, len(self.balls) - 1):
+                        ball1 = self.balls[i]
+                        ball2 = self.balls[i + 1]
+                        if ball1.rect.x <= curr_ball.rect.x <= ball2.rect.x \
+                                and ball1.rect.y <= curr_ball.rect.y <= ball2.rect.y:
+                            x, y = ball2.rect.x, ball2.rect.y
+                            trajectory = ball2.trajectory
+                            for j in range(len(self.balls)):
+                                if j <= i:
+                                    self.balls[j].move_by_insert_ball(-30)
+                                else:
+                                    self.balls[j].move_by_insert_ball(30)
+                            curr_ball.rect.x = x - 30
+                            curr_ball.rect.y = y
+                            curr_ball.trajectory = trajectory.copy()
+                            self.balls.insert(i + 1, curr_ball)
+                            self.kill_balls.remove(curr_ball)
+                            break
             self.kill_balls.update()
             self.kill_balls.draw(screen)
             pygame.display.update()

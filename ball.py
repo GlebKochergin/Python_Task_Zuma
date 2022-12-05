@@ -45,6 +45,22 @@ class Ball(pygame.sprite.Sprite):
             self.rect.y -= self.speed
         elif self.rotation == Rotation.DOWN.value:
             self.rect.y += self.speed
+        
+    def move_by_insert_ball(self, delta, bound_x=1100, bound_y=700):
+        if self.rotation == Rotation.LEFT.value or self.rotation == Rotation.RIGHT.value:
+            if self.rect.x > bound_x - 30:
+                hui = self.rect.x
+                self.rect.x = bound_x
+                self.rect.y += (30 - (bound_x - hui))
+            else:
+                self.rect.x += delta
+        else:
+            if self.rect.y > bound_y - 30:
+                hui = self.rect.y
+                self.rect.y = bound_y
+                self.rect.x -= (30 - (bound_y - hui))
+            else:
+                self.rect.y += delta
 
     def __rotate(self):
         x, y, w, h = self.rect
@@ -58,8 +74,10 @@ class Ball(pygame.sprite.Sprite):
         dx = self.mouse_x - 520
         dy = self.mouse_y - 340
         angle = math.atan2(dy, dx)
-        self.rect.x += 10 * math.cos(angle)
-        self.rect.y += 10 * math.sin(angle)
+        # x, y = self.rect.center
+        # self.rect.center = (x + 10 * math.cos(angle), y + 10 * math.sin(angle))
+        self.rect.x += 5 * math.cos(angle)
+        self.rect.y += 5 * math.sin(angle)
 
     def find_path(self):
         dx = self.mouse_x - self.rect.x
