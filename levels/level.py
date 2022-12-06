@@ -13,6 +13,13 @@ class Level:
         self.size = screen.get_size()
         self.pause_button = Button(120, 70, screen, pygame.Color(255, 165, 0))
         self.levels = {'back': [False, back_menu]}
+        self.clock = pygame.time.Clock()
+        self.balls_textures = ['src/textures/GlebBall.png',
+                       'src/textures/IlyaBall.png',
+                       'src/textures/KolyaBall.png',
+                       'src/textures/KostyaBall.png',
+                       'src/textures/StepaBall.png',
+                       'src/textures/VovaBall.png']
 
     def show(self, screen: pygame.Surface):
         raise NotImplementedError()
@@ -26,15 +33,8 @@ class Level1(Level):
         self.ball = Ball(screen, 'src/textures/GlebBall.png')
         self.hole = pygame.image.load('src/textures/hole.png')
         self.hole = pygame.transform.scale(self.hole, (90, 90))
-        self.clock = pygame.time.Clock()
         self.critical_points = [(1100,Rotation.DOWN.value), (700, Rotation.LEFT.value),
                                 (135, Rotation.UP.value)]
-        self.balls_textures = ['src/textures/GlebBall.png',
-                       'src/textures/IlyaBall.png',
-                       'src/textures/KolyaBall.png',
-                       'src/textures/KostyaBall.png',
-                       'src/textures/StepaBall.png',
-                       'src/textures/VovaBall.png']
         # self.balls = [Ball(screen, random.choice(self.balls_textures), i, trajectory=self.critical_points)
         #             for i in range(-6000, 1, 60)]
         self.balls = [Ball(screen, random.choice(self.balls_textures), i, trajectory=self.critical_points)

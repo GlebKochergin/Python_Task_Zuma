@@ -12,7 +12,6 @@ class Ball(pygame.sprite.Sprite):
         self.image = pygame.image.load(texture_path)
         x, y, w, h = self.image.get_rect()
         self.image = pygame.transform.scale(self.image, (w // 5, h // 5))
-        self.image = pygame.transform.rotate(self.image, -90)
         self.rect = self.image.get_rect(center=(200, 100))
         self.rect.x = dx
         self.rect.y = dy
@@ -36,7 +35,7 @@ class Ball(pygame.sprite.Sprite):
         self.screen.blit(self.image, self.rect)
 
     def move(self):
-        # self.__rotate()
+        self.__rotate()
         if self.rotation == Rotation.RIGHT.value:
             self.rect.x += self.speed
         elif self.rotation == Rotation.LEFT.value:
@@ -74,8 +73,6 @@ class Ball(pygame.sprite.Sprite):
         dx = self.mouse_x - 520
         dy = self.mouse_y - 340
         angle = math.atan2(dy, dx)
-        # x, y = self.rect.center
-        # self.rect.center = (x + 10 * math.cos(angle), y + 10 * math.sin(angle))
         self.rect.x += 5 * math.cos(angle)
         self.rect.y += 5 * math.sin(angle)
 
