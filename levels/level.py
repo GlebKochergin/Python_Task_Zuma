@@ -72,6 +72,7 @@ class Level1(Level):
                     pygame.quit()
                     sys.exit(0)
                 if i.type == pygame.MOUSEBUTTONUP:
+                    pygame.mixer.Sound('src/sounds/frog_sound.mp3').play()
                     if len(self.kill_balls) == 0:
                         kill_ball = Ball(screen,
                                          random.choice(self.balls_textures),

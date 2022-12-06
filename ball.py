@@ -70,6 +70,9 @@ class Ball(pygame.sprite.Sprite):
         # self.rect = self.image.get_rect(center=self.rect.center)
 
     def update(self):
+        self.__strike()
+
+    def __strike(self):
         dx = self.mouse_x - 520
         dy = self.mouse_y - 340
         angle = math.atan2(dy, dx)
