@@ -92,7 +92,8 @@ class Level1(Level):
             if len(self.kill_balls) > 0:
                 curr_ball = self.kill_balls.sprites()[-1]
                 if curr_ball.rect.x <= 1100 and curr_ball.rect.y <= 155:
-                    if abs(curr_ball.rect.x - self.balls[0].rect.x)<= 60:
+                    if abs(curr_ball.rect.x - self.balls[0].rect.x)<= 60\
+                            and abs(curr_ball.rect.y - self.balls[0].rect.y) <= 60:
                         x, y = self.balls[0].rect.x, self.balls[0].rect.y
                         trajectory = self.balls[0].trajectory
                         curr_ball.trajectory = trajectory.copy()
@@ -102,7 +103,8 @@ class Level1(Level):
                         self.balls.insert(0, curr_ball)
                         self.kill_balls.remove(curr_ball)
                         continue
-                    if abs(curr_ball.rect.x - self.balls[-1].rect.x)<= 60:
+                    if abs(curr_ball.rect.x - self.balls[-1].rect.x)<= 60 \
+                            and abs(curr_ball.rect.y - self.balls[-1].rect.y)<= 60:
                         x, y = self.balls[-1].rect.x, self.balls[-1].rect.y
                         trajectory = self.balls[-1].trajectory
                         curr_ball.trajectory = trajectory.copy()
