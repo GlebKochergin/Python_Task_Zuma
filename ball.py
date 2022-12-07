@@ -43,7 +43,17 @@ class Ball(pygame.sprite.Sprite):
             self.rect.y -= self.moving_speed
         elif self.rotation == Rotation.DOWN.value:
             self.rect.y += self.moving_speed
-        
+
+    def reverse_move(self):
+        if self.rotation == Rotation.RIGHT.value:
+            self.rect.x -= self.moving_speed * 5
+        elif self.rotation == Rotation.LEFT.value:
+            self.rect.x += self.moving_speed * 5
+        elif self.rotation == Rotation.UP.value:
+            self.rect.y += self.moving_speed * 5
+        elif self.rotation == Rotation.DOWN.value:
+            self.rect.y -= self.moving_speed * 5
+
     def move_by_insert_ball(self, delta, bound_x=1100, bound_y=700):
         if self.rotation == Rotation.LEFT.value \
                 or self.rotation == Rotation.RIGHT.value:

@@ -2,10 +2,11 @@ import random
 import sys
 import pygame
 from Background import Background
-from level_abstract import Level
+from Button import Button
+from levels.level_abstract import Level
 from frog import Frog
 from ball import Ball
-from enums import Rotation
+from enums import Rotation, Color
 
 
 class Level1(Level):
@@ -19,6 +20,8 @@ class Level1(Level):
         self.critical_points = [(1100, Rotation.DOWN.value),
                                 (700, Rotation.LEFT.value),
                                 (135, Rotation.UP.value)]
+        self.back_button = Button(115, 70, screen, Color.ORANGE.value)
+        self.widget = self.levels = {'back': [False, back_menu]}
         self.balls = [Ball(screen, random.choice(self.balls_textures), i,
                            trajectory=self.critical_points)
                       for i in range(10, 371, 60)]
@@ -29,6 +32,8 @@ class Level1(Level):
             self.clock.tick(60)
             screen.fill([255, 255, 255])
             screen.blit(self.background.image, self.background.rect)
+            self.widget['back'][0] = self.back_button.draw_button(
+                10, 10, 'Back', 50, [10, 10])
             routes = [
                 [(55, 90, 1160, 65), (0, 100, 140, 140)],
                 [(55, 90, 65, 600), (1095, 165, 140, 140)],
@@ -46,12 +51,12 @@ class Level1(Level):
                 ball.check_critical_points()
                 ball.move()
             self.frog.blit()
+            self.frog.rotate()
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit(0)
-                if i.type == pygame.MOUSEBUTTONUP:
-                    pygame.mixer.Sound('src/sounds/frog_sound.mp3').play()
+                if i.type == pygame.MOUSEBUTTONUP and not self.back_button.was_click:
                     if len(self.kill_balls) == 0:
                         kill_ball = Ball(screen,
                                          random.choice(self.balls_textures),
@@ -68,6 +73,9 @@ class Level1(Level):
                                                  self.balls_textures),
                                              520, 340)
                             self.kill_balls.add(kill_ball)
+            for button in self.widget.keys():
+                if self.widget[button][0]:
+                    return self.widget[button][1]
             if len(self.kill_balls) > 0:
                 curr_ball = self.kill_balls.sprites()[-1]
                 if curr_ball.rect.x <= 1100 and curr_ball.rect.y <= 155:

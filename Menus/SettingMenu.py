@@ -3,7 +3,6 @@ import pygame
 from Background import Background
 from Button import Button, print_text
 from enums import Color
-import src
 
 
 class SettingsMenu:
@@ -33,6 +32,9 @@ class SettingsMenu:
         self.volume = 0
 
     def show(self, screen: pygame.Surface):
+        # pygame.mixer.music.load('src/music/morgen_settings.mp3')
+        # pygame.mixer.music.load('src/music/morgen_levels.mp3')
+        # pygame.mixer.music.play()
         while True:
             screen.fill([255, 255, 255])
             screen.blit(self.background.image, self.background.rect)
@@ -47,7 +49,6 @@ class SettingsMenu:
                 860, 150, 'P', 50, [15, 5])
             self.widget['off_music'][0] = self.off_music_button.draw_button(
                 920, 150, 'OFF', 50, [10, 5])
-            pygame.mixer.music.set_volume(self.volume / 1000)
             self.widget['back'][0] = self.back_button.draw_button(
                 self.size[0] / 2 - 110 / 2,
                 700,

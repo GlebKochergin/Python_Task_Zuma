@@ -5,7 +5,6 @@ from Button import Button, print_text
 from Menus.LevelsMenu import LevelsMenu
 from Menus.SettingMenu import SettingsMenu
 from enums import Color
-import src
 
 
 class MainMenu:
@@ -19,10 +18,10 @@ class MainMenu:
         self.widgets = {'start': [False, LevelsMenu(screen, self)],
                         'settings': [False, SettingsMenu(screen, self)],
                         'quit': [False, quit]}
-        pygame.mixer.music.load('src/music/start_music_cadillac.mp3')
-        pygame.mixer.music.play(-1)
 
     def show(self, screen: pygame.Surface):
+        # pygame.mixer.music.load('src/music/start_music_cadillac.mp3')
+        # pygame.mixer.music.play()
         while True:
             screen.fill([255, 255, 255])
             screen.blit(self.background.image, self.background.rect)
