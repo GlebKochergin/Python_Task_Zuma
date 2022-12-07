@@ -2,7 +2,7 @@ import random
 import sys
 import pygame
 from Background import Background
-from level_abstract import Level
+from levels.level_abstract import Level
 from frog import Frog
 from ball import Ball
 from enums import Rotation
@@ -23,6 +23,7 @@ class Level1(Level):
                            trajectory=self.critical_points)
                       for i in range(10, 371, 60)]
         self.kill_balls = pygame.sprite.Group()
+        self.frog_sound = pygame.mixer.Sound('src/sounds/frog_sound.mp3')
 
     def show(self, screen: pygame.Surface):
         while True:
@@ -51,7 +52,7 @@ class Level1(Level):
                     pygame.quit()
                     sys.exit(0)
                 if i.type == pygame.MOUSEBUTTONUP:
-                    pygame.mixer.Sound('src/sounds/frog_sound.mp3').play()
+                    self.frog_sound.play()
                     if len(self.kill_balls) == 0:
                         kill_ball = Ball(screen,
                                          random.choice(self.balls_textures),
