@@ -4,8 +4,7 @@ import pygame
 class Button:
     def __init__(self, length: int, width: int, screen,
                  active_color=pygame.Color(190, 190, 170),
-                 inactive_color=pygame.Color(190, 210, 210),
-                 ):
+                 inactive_color=pygame.Color(190, 210, 210)):
         self.length = length
         self.width = width
         self.active_color = active_color

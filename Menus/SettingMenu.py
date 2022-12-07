@@ -3,13 +3,15 @@ import pygame
 from Background import Background
 from Button import Button, print_text
 from enums import Color
+import src
 
 
 class SettingsMenu:
     def __init__(self, screen: pygame.Surface, back_menu):
         self.size = screen.get_size()
         self.back_button = Button(115, 70, screen, Color.ORANGE.value)
-        self.background = Background('src/backgrounds/math_mech_settings.jpg', [0, 0])
+        self.background = Background(
+            'src/backgrounds/math_mech_settings.jpg', [0, 0])
         self.add_vlm_button = Button(50, 50, screen)
         self.lower_vlm_button = Button(50, 50, screen)
         self.off_music_button = Button(90, 50, screen)
@@ -18,10 +20,6 @@ class SettingsMenu:
                                      'lower_vlm': [False, self.lower_vlm],
                                      'off_music': [False, self.off_music]}
         self.volume = 500
-        pygame.mixer.music.load('src/music/start_music_cadillac.mp3')
-        pygame.mixer.music.play(-1)
-        # pygame.mixer.music.set_volume(self.volume / 1000)
-        pygame.mixer.music.set_volume(0)
 
     def add_vlm(self):
         if self.volume < 500:
@@ -50,7 +48,6 @@ class SettingsMenu:
             self.widget['off_music'][0] = self.off_music_button.draw_button(
                 920, 150, 'OFF', 50, [10, 5])
             pygame.mixer.music.set_volume(self.volume / 1000)
-
             self.widget['back'][0] = self.back_button.draw_button(
                 self.size[0] / 2 - 110 / 2,
                 700,

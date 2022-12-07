@@ -3,7 +3,8 @@ import pygame
 from Background import Background
 from Button import Button
 from enums import Color
-from levels.level import Level1
+from levels.level_1 import Level1
+import src
 
 
 class LevelsMenu:
@@ -12,7 +13,8 @@ class LevelsMenu:
         self.back_button = Button(115, 70, screen, Color.ORANGE.value)
         self.levels = {'back': [False, back_menu]}
         self.level_buttons = [Button(160, 70, screen) for _ in range(5)]
-        self.background = Background('src/backgrounds/math_mech_levels.jpg', [0, 0])
+        self.background = Background('src/backgrounds/math_mech_levels.jpg',
+                                     [0, 0])
 
         for i in range(5):
             self.levels[f'level {i+1}'] = [False, Level1(screen, self)]

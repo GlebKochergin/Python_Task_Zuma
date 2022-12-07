@@ -10,13 +10,11 @@ class Frog(pygame.sprite.Sprite):
         x, y, w, h = self.image.get_rect()
         self.image = pygame.transform.scale(self.image, (w // 3, h // 3))
         self.image = pygame.transform.rotate(self.image, -110)
-
         self.rect = self.image.get_rect(center=(pos_x, pos_y))
         self.rect.x = pos_x - 100
         self.rect.y = pos_y - 100
         self.rect.width = w // 3
         self.rect.height = h // 3
-
         self.original_image = self.image
         self.screen.blit(self.image, self.rect)
 

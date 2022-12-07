@@ -2,20 +2,25 @@ import sys
 import pygame
 from Background import Background
 from Button import Button, print_text
-from LevelsMenu import LevelsMenu
-from SettingMenu import SettingsMenu
+from Menus.LevelsMenu import LevelsMenu
+from Menus.SettingMenu import SettingsMenu
 from enums import Color
+import src
+
 
 class MainMenu:
     def __init__(self, screen: pygame.Surface):
         self.size = screen.get_size()
-        self.background = Background('src/backgrounds/math_mech_menu.jpg', [0, 0])
+        self.background = Background('src/backgrounds/math_mech_menu.jpg',
+                                     [0, 0])
         self.start_button = Button(130, 70, screen, Color.GREEN.value)
         self.settings_button = Button(200, 70, screen, Color.BLUE.value)
         self.quit_button = Button(100, 70, screen, Color.RED.value)
         self.widgets = {'start': [False, LevelsMenu(screen, self)],
                         'settings': [False, SettingsMenu(screen, self)],
                         'quit': [False, quit]}
+        pygame.mixer.music.load('src/music/start_music_cadillac.mp3')
+        pygame.mixer.music.play(-1)
 
     def show(self, screen: pygame.Surface):
         while True:

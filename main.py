@@ -1,7 +1,7 @@
 import types
 
 import pygame
-from MainMenu import MainMenu
+from Menus.MainMenu import MainMenu
 
 pygame.init()
 
