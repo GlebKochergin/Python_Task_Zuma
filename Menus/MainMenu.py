@@ -20,8 +20,6 @@ class MainMenu:
                         'quit': [False, quit]}
 
     def show(self, screen: pygame.Surface):
-        # pygame.mixer.music.load('src/music/start_music_cadillac.mp3')
-        # pygame.mixer.music.play()
         while True:
             screen.fill([255, 255, 255])
             screen.blit(self.background.image, self.background.rect)

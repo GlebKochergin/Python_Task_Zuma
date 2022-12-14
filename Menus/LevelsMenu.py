@@ -23,8 +23,6 @@ class LevelsMenu:
         self.levels['New Year Level'] = [False, Level3(screen, self)]
 
     def show(self, screen: pygame.Surface):
-        # pygame.mixer.music.load('src/music/morgen_levels.mp3')
-        # pygame.mixer.music.play(-1)
         while True:
             screen.fill([255, 255, 255])
             screen.blit(self.background.image, self.background.rect)
